@@ -25,7 +25,7 @@ class MineConfigAdmin(admin.ModelAdmin):
     list_display = ['project', 'mine_name']   
     #要搜索的字段列表
     search_fields = ['project', 'mine_name']
-    list_filter = ['project', 'mine_name']
+    list_filter = ['project']
     #max show count
     list_max_show_all = 20
 
@@ -35,9 +35,40 @@ admin.site.register(Mine, MineConfigAdmin)
 # Register your models here.
 class MineDetailConfigAdmin(admin.ModelAdmin):   
     #要显示的字段列表
-    list_display = ['mine','project_role','mine_status','mine_gas_grade','work_instruction_document']   
+    list_display = ['mine','project_role','mine_status','mine_gas_grade',
+        'geological_condition','coal_seam_occurrence', 'mining_order_method_process',
+        'gas_storage','staff_composition_quality',
+        'staff_technical_foundation',
+
+        'process_adaptation_conditions',
+        'implementation_period',
+        'whether_it_is_necessary',
+        'technical_complexity',
+        'impact_on_mine_production_system',
+
+
+        'technical_description',
+        'technical_characteristics',
+        'quantitative_effect_achieved',
+
+
+        'organization',
+        'management_responsibility',
+        'resource_matching',
+
+        'work_link',
+        'technical_process_control_document',
+        'job_control_program',
+
+        'the_best_technical_indicators_and_standards',
+        'the_best_time_standard',
+        'quantity_of_work',
+
+        'work_instruction_document',
+        'operating_procedure']  
+
     #要搜索的字段列表
-    search_fields = ['mine','project_role','mine_status']
+    search_fields = ['project_role','mine_status']
     list_filter = ['mine']
     #max show count
     list_max_show_all = 2
