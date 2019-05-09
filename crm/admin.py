@@ -64,13 +64,13 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
         'the_best_time_standard',
         'quantity_of_work',
 
-        'work_instruction_document',
-        'operating_procedure']  
+        'work_instruction_document_link',
+        'operating_procedure_link']  
 
     #要搜索的字段列表
     search_fields = ['project_role','mine_status']
     list_filter = ['mine']
     #max show count
-    list_max_show_all = 2
+    list_max_show_all = 20
 
 admin.site.register(MineDetail, MineDetailConfigAdmin)

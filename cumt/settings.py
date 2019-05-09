@@ -26,8 +26,9 @@ SECRET_KEY = 'ld+@u&og_g1xrpba!539=)_i7s9z58zt_z+yyiq^(vpdh$3k_^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#DEBUG = False
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
 
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -115,10 +117,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'
 
 
@@ -133,3 +135,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# import socket
+# hostname = socket.getfqdn(socket.gethostname())
+# addr = socket.gethostbyname(hostname)
+
+# if addr == '172.17.29.78':
+#     #阿里云服务器
+MEDIA_ROOT = '/opt/zbox/app/htdocs/static'
+
+#     website = "http://39.96.220.255/"
+# else:
+#     #本机地址
+#     MEDIA_ROOT = '/Applications/XAMPP/htdocs/static/'
+
+#     website = "http://127.0.0.1/"

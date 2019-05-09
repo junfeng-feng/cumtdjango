@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.safestring import mark_safe
+from django.conf import settings
 
 # Create your models here.
 
@@ -34,6 +36,7 @@ class MineDetail(models.Model):
           (u'是', u'是'),
           (u'否', u'否')
      )
+
     def get_project(self):
         return self.mine.project
         
@@ -74,6 +77,29 @@ class MineDetail(models.Model):
 
     work_instruction_document = models.FileField(upload_to='upload/%Y/%m/%d/%H/%M/%S', blank=True, verbose_name='作业指导文件')
     operating_procedure = models.FileField(upload_to='upload/%Y/%m/%d/%H/%M/%S', blank=True, verbose_name='操作规程')
+    
+
+    website = "http://39.96.220.255/"
+    def work_instruction_document_link(self):
+        if work_instruction_document == None:
+            return "无"
+        try:
+            return mark_safe('<a href="' + website + '/static/%s" />%s<a>' % (
+                    self.work_instruction_document.url, self.work_instruction_document.url))
+        except Exception as e:
+            #print(e)
+            return '无'+str(e)
+    def operating_procedure_link(self):
+        if operating_procedure == None:
+            return "无"
+
+        try:
+            return mark_safe('<a href="' + website + '/static/%s" />%s<a>' % (
+                    self.operating_procedure.url, self.operating_procedure.url))
+        except Exception as e:
+            #print(e)
+            return '无' + str(e)
+
     def __str__(self):
         return self.project_role
 
