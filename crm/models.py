@@ -31,7 +31,8 @@ class MineDetail(models.Model):
     MINE_GAS_GRADE = (
           (u'hybrid', u'煤与瓦斯突出矿井'),
           (u'hign', u'高瓦斯矿井'),
-          (u'low', u'低瓦斯矿井')
+          (u'low', u'低瓦斯矿井'),
+          (u'other', u'其他灾害情况')
       )
     YES_NO = (
           (u'是', u'是'),
@@ -71,8 +72,8 @@ class MineDetail(models.Model):
 
     work_link = models.CharField(max_length=256, default='', blank=True, verbose_name='工作环节')
     #technical_process_control_document = models.CharField(max_length=256, default='', blank=True, verbose_name='技术过程控制文件')
-    technical_process_control_document = RichTextUploadingField(max_length=40960, default='', blank=True, verbose_name='技术过程控制文件')
-    job_control_program = models.CharField(max_length=256, default='', blank=True, verbose_name='作业控制程序')
+    technical_process_control_document = models.TextField(max_length=4096, default='', blank=True, verbose_name='技术过程控制文件')
+    job_control_program = RichTextUploadingField(max_length=40960, default='', blank=True, verbose_name='作业控制程序')
 
 
     the_best_technical_indicators_and_standards = models.CharField(max_length=256, default='', blank=True, verbose_name='达到的最佳技术指标及标准')
@@ -111,5 +112,6 @@ class MineDetail(models.Model):
         return self.project.project_name
 
     class Meta:
+        unique_together=("mine", "project")
         verbose_name = "试验矿井详情"
         verbose_name_plural = '试验矿井详情'

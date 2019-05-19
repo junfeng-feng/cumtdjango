@@ -35,6 +35,8 @@ admin.site.register(Mine, MineConfigAdmin)
 class MineDetailConfigAdmin(admin.ModelAdmin):   
     #要显示的字段列表
     list_display = [
+    'id',
+
     'mine','project',
 
     'project_role','mine_status','mine_gas_grade',
@@ -118,7 +120,7 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
     )
     #要搜索的字段列表
     search_fields = ['project_role','mine_status']
-    list_filter = ['mine']
+    list_filter = ['mine', 'project']
     #max show count
     list_max_show_all = 20
     #save_on_top = True
