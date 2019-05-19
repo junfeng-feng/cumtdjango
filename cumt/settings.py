@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor', #添加这个,富文本
+    'ckeditor_uploader', #上传图片
 ]
 
 MIDDLEWARE = [
@@ -142,9 +144,10 @@ STATIC_URL = '/static/'
 
 # if addr == '172.17.29.78':
 #     #阿里云服务器
-MEDIA_ROOT = '/opt/zbox/app/htdocs/static'
+MEDIA_URL="http://39.96.220.255/media/"
+MEDIA_ROOT = 'media/'
+CKEDITOR_UPLOAD_PATH='media/image/'
 
-#     website = "http://39.96.220.255/"
 # else:
 #     #本机地址
 #     MEDIA_ROOT = '/Applications/XAMPP/htdocs/static/'

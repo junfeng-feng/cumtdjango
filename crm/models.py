@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.conf import settings
 import json
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+
 # Create your models here.
 
 class Project(models.Model):
@@ -15,9 +18,7 @@ class Project(models.Model):
         verbose_name_plural = "项目名称"
 
 class Mine(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='项目名称')
     mine_name = models.CharField(max_length=256, verbose_name='矿井名称')
-    #votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.mine_name
@@ -40,7 +41,9 @@ class MineDetail(models.Model):
     def get_project(self):
         return self.mine.project
         
-    mine = models.ForeignKey(Mine, on_delete=models.CASCADE, verbose_name='矿井名称')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default='1', verbose_name='项目名称')
+    mine = models.ForeignKey(Mine, on_delete=models.CASCADE, default='1', verbose_name='矿井名称')
+
     project_role = models.CharField(max_length=256,default='',  blank=True,  verbose_name='项目作用')
     mine_status = models.CharField(max_length=256, default='', blank=True, verbose_name='矿井状态')
     mine_gas_grade = models.CharField(max_length=256, default='low', blank=True, verbose_name='矿井瓦斯等级', choices=MINE_GAS_GRADE)
@@ -62,12 +65,13 @@ class MineDetail(models.Model):
     technical_characteristics = models.CharField(max_length=256, default='', blank=True, verbose_name='技术特征')
     quantitative_effect_achieved = models.CharField(max_length=256, default='', blank=True, verbose_name='达到的量化效果')
 
-    organization = models.CharField(max_length=256, default='', blank=True, verbose_name='组织机构')
+    organization = RichTextUploadingField(max_length=40960, default='', blank=True, verbose_name='组织机构')
     management_responsibility = models.CharField(max_length=256, default='', blank=True, verbose_name='管理职责')
     resource_matching = models.CharField(max_length=256, default='', blank=True, verbose_name='资源配套')
 
     work_link = models.CharField(max_length=256, default='', blank=True, verbose_name='工作环节')
-    technical_process_control_document = models.CharField(max_length=256, default='', blank=True, verbose_name='技术过程控制文件')
+    #technical_process_control_document = models.CharField(max_length=256, default='', blank=True, verbose_name='技术过程控制文件')
+    technical_process_control_document = RichTextUploadingField(max_length=40960, default='', blank=True, verbose_name='技术过程控制文件')
     job_control_program = models.CharField(max_length=256, default='', blank=True, verbose_name='作业控制程序')
 
 
@@ -78,30 +82,33 @@ class MineDetail(models.Model):
     work_instruction_document = models.FileField(upload_to='upload/%Y/%m/%d/%H/%M/%S', blank=True, verbose_name='作业指导文件')
     operating_procedure = models.FileField(upload_to='upload/%Y/%m/%d/%H/%M/%S', blank=True, verbose_name='操作规程')
     
-
-    website = "http://39.96.220.255/"
-    def work_instruction_document_link(self):
-        if self.work_instruction_document and self.work_instruction_document.name == "":
-            return "无"
-        try:
-            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
-                    self.work_instruction_document.url, self.work_instruction_document.url))
-        except Exception as e:
-            #print(e)
-            return '无'#+str(e)
-    def operating_procedure_link(self):
-        if self.operating_procedure and self.operating_procedure.name == "":
-            return "无"
-
-        try:
-            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
-                    self.operating_procedure.url, self.operating_procedure.url))
-        except Exception as e:
-            #print(e)
-            return '无'# + str(e)
-
+#
+#    website = "http://39.96.220.255"
+#    def work_instruction_document_link(self):
+#        if self.work_instruction_document and self.work_instruction_document.name == "":
+#            return "无"
+#        try:
+#            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
+#                    self.work_instruction_document.url, self.work_instruction_document.url))
+#        except Exception as e:
+#            #print(e)
+#            return '无'#+str(e)
+#    def operating_procedure_link(self):
+#        if self.operating_procedure and self.operating_procedure.name == "":
+#            return "无"
+#
+#        try:
+#            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
+#                    self.operating_procedure.url, self.operating_procedure.url))
+#        except Exception as e:
+#            #print(e)
+#            return '无'# + str(e)
+#    #类似属性的verbose_name 
+#    work_instruction_document_link.short_description = "作业指导文件"
+#    operating_procedure_link.short_description = '操作规程'
+ 
     def __str__(self):
-        return self.project_role
+        return self.project.project_name
 
     class Meta:
         verbose_name = "试验矿井详情"
