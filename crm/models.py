@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.conf import settings
-
+import json
 # Create your models here.
 
 class Project(models.Model):
@@ -81,24 +81,24 @@ class MineDetail(models.Model):
 
     website = "http://39.96.220.255/"
     def work_instruction_document_link(self):
-        if work_instruction_document == None:
+        if self.work_instruction_document and self.work_instruction_document.name == "":
             return "无"
         try:
-            return mark_safe('<a href="' + website + '/static/%s" />%s<a>' % (
+            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
                     self.work_instruction_document.url, self.work_instruction_document.url))
         except Exception as e:
             #print(e)
-            return '无'+str(e)
+            return '无'#+str(e)
     def operating_procedure_link(self):
-        if operating_procedure == None:
+        if self.operating_procedure and self.operating_procedure.name == "":
             return "无"
 
         try:
-            return mark_safe('<a href="' + website + '/static/%s" />%s<a>' % (
+            return mark_safe('<a href="' + self.website + '/static/%s" />%s<a>' % (
                     self.operating_procedure.url, self.operating_procedure.url))
         except Exception as e:
             #print(e)
-            return '无' + str(e)
+            return '无'# + str(e)
 
     def __str__(self):
         return self.project_role
