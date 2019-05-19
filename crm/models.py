@@ -8,7 +8,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
 class Project(models.Model):
-    project_name = models.CharField(max_length=256, verbose_name='项目名称')
+    project_name = models.CharField(max_length=256, unique = True, verbose_name='项目名称')
 
     def __str__(self):
         return self.project_name
@@ -18,7 +18,7 @@ class Project(models.Model):
         verbose_name_plural = "项目名称"
 
 class Mine(models.Model):
-    mine_name = models.CharField(max_length=256, verbose_name='矿井名称')
+    mine_name = models.CharField(max_length=256, unique = True, verbose_name='矿井名称')
 
     def __str__(self):
         return self.mine_name
@@ -48,12 +48,12 @@ class MineDetail(models.Model):
     mine_status = models.CharField(max_length=256, default='', blank=True, verbose_name='矿井状态')
     mine_gas_grade = models.CharField(max_length=256, default='low', blank=True, verbose_name='矿井瓦斯等级', choices=MINE_GAS_GRADE)
 
-    geological_condition = models.CharField(max_length=256, default='',blank=True, verbose_name='地质条件')
-    coal_seam_occurrence = models.CharField(max_length=256, default='',blank=True, verbose_name='煤层赋存')
-    mining_order_method_process = models.CharField(max_length=256, default='',blank=True, verbose_name='开采顺序、方法、工艺')
-    gas_storage = models.CharField(max_length=256,default='', blank=True,  verbose_name='瓦斯赋存')
-    staff_composition_quality = models.CharField(max_length=256, default='', blank=True, verbose_name='人员构成及素质')
-    staff_technical_foundation = models.CharField(max_length=256, default='', blank=True, verbose_name='人的技术基础')
+    geological_condition = models.TextField(max_length=4096, default='',blank=True, verbose_name='地质条件')
+    coal_seam_occurrence = models.TextField(max_length=4096 , default='',blank=True, verbose_name='煤层赋存')
+    mining_order_method_process = models.TextField(max_length=4096, default='',blank=True, verbose_name='开采顺序、方法、工艺')
+    gas_storage = models.TextField(max_length=4096,default='', blank=True,  verbose_name='瓦斯赋存')
+    staff_composition_quality = models.TextField(max_length=4096, default='', blank=True, verbose_name='人员构成及素质')
+    staff_technical_foundation = models.TextField(max_length=4096, default='', blank=True, verbose_name='人的技术基础')
 
     process_adaptation_conditions = models.CharField(max_length=256, default='', blank=True, verbose_name='工艺适应条件')
     implementation_period = models.CharField(max_length=256, default='', blank=True, verbose_name='实施工期')

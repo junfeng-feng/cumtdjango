@@ -34,7 +34,9 @@ admin.site.register(Mine, MineConfigAdmin)
 # Register your models here.
 class MineDetailConfigAdmin(admin.ModelAdmin):   
     #要显示的字段列表
-    list_display = ['mine',
+    list_display = [
+    'mine','project',
+
     'project_role','mine_status','mine_gas_grade',
 
         'geological_condition','coal_seam_occurrence', 'mining_order_method_process',
@@ -53,12 +55,12 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
         'quantitative_effect_achieved',
 
 
-        'organization',
+        #'organization',
         'management_responsibility',
         'resource_matching',
 
         'work_link',
-        'technical_process_control_document',
+        #'technical_process_control_document',
         'job_control_program',
 
         'the_best_technical_indicators_and_standards',
@@ -66,9 +68,13 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
         'quantity_of_work',
 
         'work_instruction_document',
-        'operating_procedure']  
+        'operating_procedure'
+
+        ]  
 
     fieldsets = (
+        ("基本信息", {'fields': ['mine', 'project']}),
+
         ("适用条件", {'fields': ['project_role', 'mine_status','mine_gas_grade']}),
 
         ("技术基础", {'fields': ['geological_condition','coal_seam_occurrence', 'mining_order_method_process',
@@ -98,18 +104,16 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
         'job_control_program',
 ]}),
 
-        ("作业指导文件", {'fields': [         'work_instruction_document',
+        ("作业指导文件", {'fields': ['work_instruction_document',
 ]}),
         ("操作规程", {'fields': [  
         'operating_procedure'
 ]}),
 
-
-        ("技术管理效果评价标准", {'fields': [               'the_best_technical_indicators_and_standards',
+        ("技术管理效果评价标准", {'fields': ['the_best_technical_indicators_and_standards',
         'the_best_time_standard',
         'quantity_of_work',
 ]}),
-
 
     )
     #要搜索的字段列表
@@ -117,5 +121,7 @@ class MineDetailConfigAdmin(admin.ModelAdmin):
     list_filter = ['mine']
     #max show count
     list_max_show_all = 20
+    #save_on_top = True
+    preserve_filters = True
 
 admin.site.register(MineDetail, MineDetailConfigAdmin)
